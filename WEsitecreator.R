@@ -6,7 +6,9 @@ library(pander) ## creating reports
 source("functions.r")
 library (knitr)
 
-#blogdown::new_site(theme="aerohub/hugrid", hostname = "github.com")
+#blogdown::new_site(theme="aerohub/hugrid", hostname = "github.com") #used to create the website,kept for reference
+## give here url of publication where the copyrights issues were not cleared.
+problematicpubli= c()
 
 shiny::runApp("shiny_addfigure.r")
 source (file ="hallcreator.R")
