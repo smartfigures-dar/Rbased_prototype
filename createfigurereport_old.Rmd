@@ -1,0 +1,41 @@
+---
+title: "`r metadata$Title`"
+ouptut:
+  pdf_document
+---
+
+Link to smartfigure: http://somthinghere/`r metadata$url`
+
+
+
+```{r, echo = FALSE}
+
+knitr::include_graphics(paste0(pathfigure,metadata$thumb))
+```
+
+
+```{r,echo = FALSE, results='asis'}
+table1 = metadata [,-c(1:5)]
+table2 = table1[,which(table1 == "Null", arr.ind = FALSE)]
+table3= table1[,-which(table1 == "Null", arr.ind = FALSE)]
+
+cat ("missing metadata fields:
+     
+     ")
+cat(paste0(names(table2), collapse = ", "))
+cat("
+    
+    ")
+
+panderOptions("table.alignment.default", "left")
+pander (t(table3))
+
+```
+
+
+```{r, echo = FALSE}
+
+knitr::include_graphics(paste0(pathfigure,metadata$image))
+```
+
+`r metadata$description`

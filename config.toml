@@ -1,0 +1,40 @@
+# Site settings
+baseurl = "/"
+relativeURLs = "true"
+uglyURLs = "true"
+
+languageCode = "en-us"
+title = "Repositore of smart experimental results"
+theme = "hugrid"
+# Enter your tracking code to enable Google Analytics
+googleAnalytics = ""
+
+contentdir = "content"
+datadir = "data"
+layoutdir = "layouts"
+publishdir = "public/Website_all"
+
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
+
+[params]
+    # Meta
+    title = "Smart experimental results"
+    subtitle = "visualise the latest results from the lab"
+    author = "Julien Colomb, Matthew Larkum"
+    description = ""
+    keywords = "Hugo, Hugo theme, grid theme, portfolio, bookmarks, collection, contacts"
+
+    # Body background color
+    bodybgcolor = "#f9f9f9"
+
+    # Preview container button text
+    buttontext = "figure in context"
+
+    # Footer text
+    footertext = "Made by [Codrops](http://tympanus.net/codrops/2013/03/19/thumbnail-grid-with-expanding-preview/), [Hugo](http://gohugo.io) and [me](https://github.com/aerohub)"
+
+    # add extra-css
+    # custom_css = ['css/extra1.css', 'css/extra2.css']
+
+
+

@@ -1,0 +1,14 @@
+[[items]]
+ title = "A certain image"
+ image = "hall-of-results_data/Figures/active_dcap_soma.png"
+ thumb = "hall-of-results_data/Figures/active_dcap_soma_thumb.png"
+ alt = "some text if no image"
+ description = "this is some experiments"
+ url = "NA"
+[[items]]
+ title = "A certain image"
+ image = "hall-of-results_data/Figures/active_dcap_soma.png"
+ thumb = "hall-of-results_data/Figures/active_dcap_soma_thumb.png"
+ alt = "some text if no image"
+ description = "this is some experiments"
+ url = "NA"
