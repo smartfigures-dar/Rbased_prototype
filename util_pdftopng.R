@@ -65,27 +65,5 @@ allresults <- list.files(
   pattern = ".tsv"
 )
 for (i in c(1:length(allresults))) {
-  file = allresults [i]
-  headers = readmeta(file)
-  ## entered variables
-  title1 = headers$Title
-  status1 = headers$status
-  caption =  headers$description
-  url = headers$url
-  imagepath = headers$image
-  thumbpath = headers$thumb
-  shortname = strtrim(gsub("\\s", "_", title1) , 27)
-  #library (magick)
-  #source("functions.r")
-  
-  a = image_read(paste0("static/hall-of-results_data/Figures/", imagepath))
-  size_thumb_here = ifelse (headers$Highlighted,500, 250)
-  thumb = makethumbnail(theimage = a,
-                        status = status1,
-                        title = shortname, size_thumb = size_thumb_here)
-  image_write(
-    thumb,
-    path = paste0("static/hall-of-results_data/Figures/", thumbpath),
-    format = "png"
-  )
+    update_thumnail(allresults [i])
 }

@@ -63,3 +63,30 @@ write_items_toml <- function(data = allresults, filenamepath = "data/items.toml"
 readmeta <- function (path){
   read_tsv (path, col_types = cols( .default = col_character()))
 }
+
+# updating thumbnail from a metadata file
+
+update_thumnail <- function(metadata_file) {
+  headers = readmeta(metadata_file)
+  ## entered variables
+  title1 = headers$Title
+  status1 = headers$status
+  caption =  headers$description
+  url = headers$url
+  imagepath = headers$image
+  thumbpath = headers$thumb
+  shortname = strtrim(gsub("\\s", "_", title1) , 27)
+  #library (magick)
+  #source("functions.r")
+  
+  a = image_read(paste0("static/hall-of-results_data/Figures/", imagepath))
+  size_thumb_here = ifelse (headers$Highlighted,500, 250)
+  thumb = makethumbnail(theimage = a,
+                        status = status1,
+                        title = shortname, size_thumb = size_thumb_here)
+  image_write(
+    thumb,
+    path = paste0("static/hall-of-results_data/Figures/", thumbpath),
+    format = "png"
+  )
+}
