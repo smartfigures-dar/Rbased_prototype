@@ -3,7 +3,6 @@
 ## if the upload is a pdf, only the first page will be used
 
 pathfigure = "static/hall-of-results_data/Figures/"
-size_thumb = 250
 
 ## entered variables
 if (FALSE){
@@ -15,8 +14,10 @@ if (FALSE){
   update=FALSE
   comment = ""
   imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
+  highlight = "FALSE"
+  
 }
-
+size_thumb_here = ifelse (highlight,500, 250)
  
 
 filename = strtrim(gsub("\\s", "_", title1) ,27)
@@ -61,6 +62,7 @@ headers$url [1] <- url
 headers$status [1] <- status1
 headers$date_uploaded [1] <- paste0(Sys.time())
 headers$date_published [1] <- paste0(yearpub)
+headers$Highlighted [1] <- highlight
 
 #View(headers)
 write.table(headers,file = paste0(directory,"/",filename,"_meta.tsv"), 
@@ -90,7 +92,8 @@ if (imagetype == ".pdf"){
 pathimage =paste0(directory,"/",filename,".png")
 image_write(a, path =pathimage, format = "png")
 
-thumb = makethumbnail(theimage = a, status= status1, title = title1)
+
+thumb = makethumbnail(theimage = a, status= status1, title = title1, size_thumb = size_thumb_here)
 paththumb = paste0(directory,"/",filename,"_nail.png")
 image_write(thumb, path =paththumb, format = "png")
 

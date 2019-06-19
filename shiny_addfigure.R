@@ -38,11 +38,12 @@ ui <- fluidPage(
                         c("Published" = "Published",
                           "Experiment is finished" = "preprint",
                           "Draft, review request" = "draft")),
+            checkboxInput("highlight", "Is this a highlighted figure ?"),
             textAreaInput("Caption", "Caption of the figure", ""),
             textInput("Comment", "Comment about the figure", ""),
             textInput("url", "doi or webaddress of the paper/preprint", "none"),
             actionButton("button", "produce and save SER"),
-            
+            verbatimTextOutput("valuesaved"),
             
 "Preview :",
             verbatimTextOutput("valuetitle"),
@@ -64,7 +65,9 @@ server <- function(input, output, session) {
         url =input$url
         update = input$update
         comment= input$Comment
+        highlight = input$highlight
         source("figureimport.R", local = TRUE)
+        output$valuesaved <- renderText({"SmartFigure saved"})
     })
     
     
