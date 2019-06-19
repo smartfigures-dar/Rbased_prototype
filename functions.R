@@ -28,8 +28,8 @@ makethumbnail <- function(theimage, status= "draft", title= " ", size_thumb =250
   
   
   c=image_info(b)
-  xoff= (250 - c$width)/2
-  yoff= (250 - c$height)/2
+  xoff= (size_thumb - c$width)/2
+  yoff= (size_thumb - c$height)/2
   
   thumb=image_composite(background, b, offset = geometry_point(xoff, yoff))
   
