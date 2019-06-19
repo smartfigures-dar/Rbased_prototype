@@ -12,7 +12,7 @@ googleAnalytics = ""
 contentdir = "content"
 datadir = "data"
 layoutdir = "layouts"
-publishdir = "public/Website_all"
+publishdir = "www"
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 

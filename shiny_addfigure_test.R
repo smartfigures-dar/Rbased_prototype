@@ -18,16 +18,24 @@ source("functions.r")
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     # Application title
-    titlePanel("upload one figure to sarefigure repository"),
+    titlePanel("Result Gallery application"),
     
     
     # Sidebar with a slider input for number of bins
 
     
     # Show a plot of the generated distribution
-    mainPanel(tabsetPanel(
+    tabsetPanel(
+        
         tabPanel(
-            "Import figures",
+            "See  Gallery",
+            #actionButton("hallcreation", "Update website with new information"),
+            fluidRow(htmlOutput("frame"))
+        )
+        ,
+        
+        tabPanel(
+            "Import new figures",
             tagList(
                 checkboxInput("update", "Are you updating an existing entry", FALSE), 
                 fileInput("Panel1", "Choose Image",
@@ -52,15 +60,15 @@ ui <- fluidPage(
                 verbatimTextOutput("valuecap")
             )
             
-        ),
-        
+        )
+        ,
         tabPanel(
-            "Website preview",
+            "Update figure",
             actionButton("hallcreation", "Update website with new information"),
-            fluidRow(htmlOutput("frame"))
+            "rest not implemented"
         )
         
-    ))
+    )
 )
 
 # Define server logic required to draw a histogram
@@ -79,19 +87,36 @@ server <- function(input, output, session) {
         highlight = input$highlight
         source("figureimport.R", local = TRUE)
         output$valuesaved <- renderText({
-            "SmartFigure saved"
+            "SmartFigure saved, now updating gallery, be patient"
+        })
+        source(file ="hallcreator.R", local = TRUE)
+        blogdown::hugo_build()
+        output$frame <- renderUI({
+            
+            my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+            print(my_test)
+            my_test
+        })
+        output$valuesaved <- renderText({
+            "SmartFigure saved, Gallery updated"
         })
     })
     
-    
     observeEvent(input$hallcreation, {
         source(file ="hallcreator.R", local = TRUE)
-        blogdown::hugo_cmd("--config config.toml")
+        blogdown::hugo_build()
+        output$frame <- renderUI({
+            
+            my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+            print(my_test)
+            my_test
         })
-    
+        
+        })
+        
     output$frame <- renderUI({
         
-        my_test <- tags$iframe(src="https://frosty-wescoff-a4ad78.netlify.com/", width = "100%", height= "2000")
+        my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
         print(my_test)
         my_test
     })
