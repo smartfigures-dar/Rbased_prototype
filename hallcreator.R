@@ -15,33 +15,40 @@ source("functions.r")
 allresults <- list.files(path = "static/hall-of-results_data", full.names = TRUE, recursive = TRUE, pattern = ".tsv") %>% 
   lapply(readmeta)%>% 
   bind_rows %>%
-  arrange (date_uploaded)
+  arrange (desc(Highlighted), date_uploaded)
 
-allresults$image [allresults$url %in% problematicpubli] = "../../images/copyright.png"
-##redo thumbnail
-lit_results = allresults [allresults$url %in% problematicpubli,]
-
-a = image_read(paste0("static/images/copyright.png"))
-for (i in c(1:nrow(lit_results))) {
-  headers = lit_results [i,]
-  ## entered variables
+if (length(problematicpubli)>0){
+  allresults$image [allresults$url %in% problematicpubli] = "../../images/copyright.png"
+  ##redo thumbnail
+  lit_results = allresults [allresults$url %in% problematicpubli,]
   
-  title1 = lit_results$Title [i]
-  status1 = lit_results$status[i]
-  thumbpath = lit_results$thumb[i]
-  shortname = strtrim(gsub("\\s", "_", title1) , 27)
-  
-  thumb = makethumbnail(theimage = a,
-                        status = status1,
-                        title = shortname)
-  image_write(
-    thumb,
-    path = paste0("static/hall-of-results_data/Figures/", thumbpath),
-    format = "png"
-  )
+  a = image_read(paste0("static/images/copyright.png"))
+  for (i in c(1:nrow(lit_results))) {
+    headers = lit_results [i,]
+    ## entered variables
+    
+    title1 = lit_results$Title [i]
+    status1 = lit_results$status[i]
+    thumbpath = lit_results$thumb[i]
+    shortname = strtrim(gsub("\\s", "_", title1) , 27)
+    
+    thumb = makethumbnail(theimage = a,
+                          status = status1,
+                          title = shortname)
+    image_write(
+      thumb,
+      path = paste0("static/hall-of-results_data/Figures/", thumbpath),
+      format = "png"
+    )
+  }
 }
 
-write_items_toml()
+
+data2 = allresults %>% filter(Highlighted =="TRUE" )
+write_items_toml(data = data2, filename = "data_pub/itemsH.toml")
+
+data2 = allresults %>% filter(Highlighted =="FALSE" )
+write_items_toml(data = data2, filename = "data_pub/items.toml")
 
 #allresults  <- read.delim("C:/Users/juliencolomb/gitstuff/sharefigure/static/hall-of-results_data/hall-of-resluts_metadata.csv.csv")
 
