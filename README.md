@@ -2,6 +2,8 @@
 
 The software was first developed on a private repository, so initial commit history is not available atm.
 
+It is used for a public website creation for the SFB1315 (see fork), and a private version for one lab (on GIN)
+
 
 # Installation
 
