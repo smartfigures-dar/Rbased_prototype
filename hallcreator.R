@@ -45,10 +45,10 @@ if (length(problematicpubli)>0){
 
 
 data2 = allresults %>% filter(Highlighted =="TRUE" )
-write_items_toml(data = data2, filename = "data_pub/itemsH.toml")
+write_items_toml(data = data2, filename = "data/itemsH.toml")
 
 data2 = allresults %>% filter(Highlighted =="FALSE" )
-write_items_toml(data = data2, filename = "data_pub/items.toml")
+write_items_toml(data = data2, filename = "data/items.toml")
 
 #allresults  <- read.delim("C:/Users/juliencolomb/gitstuff/sharefigure/static/hall-of-results_data/hall-of-resluts_metadata.csv.csv")
 
