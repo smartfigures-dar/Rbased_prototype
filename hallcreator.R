@@ -5,7 +5,7 @@
 library(dplyr)
 library(readr)
 library (magick)
-source("functions.r")
+source("functions.R")
 
 # readmeta <- function (path){
 #   read_tsv (path, col_types = cols( .default = col_character()))

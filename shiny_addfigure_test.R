@@ -13,7 +13,7 @@ library(readr)
 library (magick)
 library(rcrossref)
 library(blogdown)
-source("functions.r")
+source("functions.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(

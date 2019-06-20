@@ -37,7 +37,7 @@ makethumbnail <- function(theimage, status= "draft", title= " ", size_thumb =250
     image_annotate(status, gravity = 'southeast',
                    color = 'black',boxcolor = colorstatus)%>%
     image_annotate(title, gravity = 'north',
-                   color = 'black',boxcolor = "white", size = min(20,500/nchar(title)))
+                   color = 'black',boxcolor = "white", size = min(20,size_thumb*2/nchar(title)))
 }
 
 
@@ -75,7 +75,7 @@ update_thumnail <- function(metadata_file) {
   url = headers$url
   imagepath = headers$image
   thumbpath = headers$thumb
-  shortname = strtrim(gsub("\\s", "_", title1) , 27)
+  shortname = strtrim(gsub("\\s", " ", title1) , 97)
   #library (magick)
   #source("functions.r")
   
