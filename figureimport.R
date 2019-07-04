@@ -10,10 +10,10 @@ if (FALSE){
   status1 = "draft"
   caption = "something scientific, right"
   url = "none"
-  imagepath= "static/hall-of-results_data/Figures/Active_dCaAP_impact_on_soma.png"
+  imagepath= "static/hall-of-results_data/Figures/atg6-9_KD_in_brain/atg6-9_KD_in_brain.png"
   update=FALSE
   comment = ""
-  imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
+  #imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
   highlight = "FALSE"
   
 }
@@ -100,4 +100,11 @@ image_write(thumb, path =paththumb, format = "png")
 #a= image_read("static/images/thumbs/4.png")
 
 
+##dropbox
 
+x <- drop_search("resultgallery", dtoken = tokenRG)
+dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/Figures/",filename)
+drop_create(dropboxfolder, dtoken = tokenRG)
+drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
+drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG )
+drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder) , dtoken = tokenRG)

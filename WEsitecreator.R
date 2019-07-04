@@ -9,8 +9,10 @@ library (knitr)
 #blogdown::new_site(theme="aerohub/hugrid", hostname = "github.com") #used to create the website,kept for reference
 ## give here url of publication where the copyrights issues were not cleared.
 problematicpubli= c()
+pathfolder ="static/ResultGallery"
+pathfigure = paste0(pathfolder,"/Figures/")
 
-shiny::runApp("shiny_addfigure.R")
+shiny::runApp("shiny_addfigure_test.R")
 source (file ="hallcreator.R")
 blogdown::serve_site()
 
