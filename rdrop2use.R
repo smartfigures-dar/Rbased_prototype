@@ -5,7 +5,7 @@ library(rdrop2)
 #saveRDS(token, "droptoken.rds")
 
 #import token
-tokenRG <- readRDS("droptoken.rds")
+#tokenRG <- readRDS("droptoken.rds")
 
 #download RG on server
 x <- drop_search("resultgallery", dtoken = tokenRG)

@@ -1,8 +1,15 @@
 
 [[items]]
- title = "atg6-9KD in MB, sNPF and plasticity"
- image = "hall-of-results_data/Figures/atg6-9KD_in_MB,_sNPF_and_pl/atg6-9KD_in_MB,_sNPF_and_pl.png"
- thumb = "hall-of-results_data/Figures/atg6-9KD_in_MB,_sNPF_and_pl/atg6-9KD_in_MB,_sNPF_and_pl_nail.png"
- alt = "something went wrong"
- description = "sNPF signaling connects autophagy suppression with presynaptic metaplasticity. Adult brain, 5 days, (a) w1118 and (b) sNPFc00448 immunostained for sNPF peptide precursor. Scale bar: 50<U+2009><U+00B5>m. c Quantification of sNPF peptide precursor within the central brain region normalized to control flies. (n<U+2009>=<U+2009>9<U+0096>11 independent brains; ***p<U+2009><<U+2009>0.001; Mann<U+0096>Whitney U-test). Adult brain, 5 days, (d) w1118 and (e) sNPFc00448 flies, immunostained for BRPNc82. Scale bar: 50<U+2009><U+00B5>m. f Quantification of BRPNc82 within the central brain region normalized to control flies (n<U+2009>=<U+2009>7<U+0096>8 independent brains; *p<U+2009><<U+2009>0.05; Mann<U+0096>Whitney U-test). Adult brain, 5 days, (g) +/snpfr-RNAi and (h) ok107/snpfr-RNAi flies, immunostained for BRPNc82. Scale bar: 50<U+2009><U+00B5>m. i Quantification of BRPNc82 within the central brain region normalized to control flies (n<U+2009>=<U+2009>13<U+0096>15 independent brains; ***p<U+2009><<U+2009>0.001; Mann<U+0096>Whitney U-test). Electron micrograph showing presynaptic specializations at PN-to-KC synapses in Calyx of (j) +/snpfr-RNAi and (k) ok107/snpfr-RNAi animals. Scale bar: 100<U+2009>nm. l Quantification representing the average T-bar size in +/snpfr-RNAi and ok107/snpfr-RNAi animals (n<U+2009>=<U+2009>206 electron micrographs across eight independent animals, with at least 20 T-bars per animal; ***p<U+2009><<U+2009>0.001; Mann<U+0096>Whitney U-test). In the box and whisker plots, the middle line of a box represents the median (50th percentile) and the terminal lines of a box represent the 25th and 75th percentile. The whiskers represent the lowest and the highest value"
- url = "https://doi.org/10.1038/s41467-019-09262-2"
+ title = "NA"
+ image = "ResultGallery/Figures/NA"
+ thumb = "ResultGallery/Figures/NA"
+ alt = "NA"
+ description = "NA"
+ url = "NA"
+[[items]]
+ title = ""
+ image = "ResultGallery/Figures/"
+ thumb = "ResultGallery/Figures/"
+ alt = ""
+ description = ""
+ url = ""

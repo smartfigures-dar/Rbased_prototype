@@ -15,7 +15,6 @@ library(rcrossref)
 library(blogdown)
 source("functions.R")
 library(rdrop2)
-tokenRG <- readRDS("droptoken.rds")
 
 pathfolder ="static/ResultGallery"
 pathfigure = paste0(pathfolder,"/Figures/")
@@ -32,6 +31,15 @@ ui <- fluidPage(
     # Show a plot of the generated distribution
     tabsetPanel(
         
+        tabPanel(
+            "Upload your dropbox token to read and save SmartFigures",
+            
+            fileInput("TOKENDROP", "upload your dropbox authentificator"),
+            actionButton("hallcreation", "Update website with new information"),
+            actionButton("reload", "reload gallery"),
+            "rest not implemented"
+        )
+        ,
         tabPanel(
             "See  Gallery",
             #actionButton("hallcreation", "Update website with new information"),
@@ -66,13 +74,7 @@ ui <- fluidPage(
             )
             
         )
-        ,
-        tabPanel(
-            "Update figure",
-            actionButton("hallcreation", "Update website with new information"),
-            fileInput("TOKENDROP", "upload your dropbox authentificator"),
-            "rest not implemented"
-        )
+        
         
     )
 )
@@ -103,6 +105,7 @@ server <- function(input, output, session) {
         update = input$update
         comment = input$Comment
         highlight = input$highlight
+        tokenRG <- readRDS(input$TOKENDROP$datapath)
         source("figureimport.R", local = TRUE)
 
         source(file ="hallcreator.R", local = TRUE)
@@ -141,6 +144,15 @@ server <- function(input, output, session) {
         my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
         print(my_test)
         my_test
+    })
+    
+    observeEvent(input$hallcreation, {
+        output$frame <- renderUI({
+            
+            my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+            print(my_test)
+            my_test
+        })
     })
     
     
