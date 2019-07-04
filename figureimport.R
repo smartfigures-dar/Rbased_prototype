@@ -2,7 +2,7 @@
 ##-- notes
 ## if the upload is a pdf, only the first page will be used
 
-pathfigure = "static/hall-of-results_data/Figures/"
+#pathfigure = "static/hall-of-results_data/Figures/"
 
 ## entered variables
 if (FALSE){
@@ -38,7 +38,7 @@ dir.create (directory)
 
 ##------------------------------------ write metadata
 
-headers =  read.delim("static/hall-of-results_data/head_hall-of-resluts_metadata.csv",
+headers =  read.delim(paste0(pathfolder,"/head_hall-of-resluts_metadata.csv"),
                       colClasses = "character")
 # work with doi
 yearpub = "NA"

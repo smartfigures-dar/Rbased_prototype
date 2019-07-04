@@ -1,10 +1,10 @@
 ## figure export
 
-pathfigure = "static/hall-of-results_data/Figures/"
+#pathfigure = "static/hall-of-results_data/Figures/"
 
 ##readmetadata
 
-allresults <- list.files(path = "static/hall-of-results_data", full.names = TRUE, recursive = TRUE, pattern = ".tsv") 
+allresults <- list.files(path = pathfolder, full.names = TRUE, recursive = TRUE, pattern = ".tsv") 
 
 tomodify = allresults [7]
 metadata=readmeta(tomodify)

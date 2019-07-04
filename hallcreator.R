@@ -11,8 +11,11 @@ source("functions.R")
 #   read_tsv (path, col_types = cols( .default = col_character()))
 # }
 
+#pathfolder ="static/hall-of-results_data"
+#pathfigure = paste0(pathfolder,"/Figures/")
 
-allresults <- list.files(path = "static/hall-of-results_data", full.names = TRUE, recursive = TRUE, pattern = ".tsv") %>% 
+
+allresults <- list.files(path = pathfolder, full.names = TRUE, recursive = TRUE, pattern = ".tsv") %>% 
   lapply(readmeta)%>% 
   bind_rows %>%
   arrange (desc(Highlighted), date_uploaded)
@@ -37,7 +40,7 @@ if (length(problematicpubli)>0){
                           title = shortname)
     image_write(
       thumb,
-      path = paste0("static/hall-of-results_data/Figures/", thumbpath),
+      path = paste0(pathfigure, thumbpath),
       format = "png"
     )
   }
@@ -59,8 +62,8 @@ write_items_toml(data = data2, filename = "data/items.toml")
 ##-- Only results from finished experiments
 
 ##-------------------- create items.toml
-data2 = allresults %>% filter(status == "Published")
-write_items_toml(data = data2, filename = "data_pub/items.toml")
+#data2 = allresults %>% filter(status == "Published")
+#write_items_toml(data = data2, filename = "data_pub/items.toml")
 
 
 

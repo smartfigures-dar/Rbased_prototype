@@ -42,7 +42,7 @@ makethumbnail <- function(theimage, status= "draft", title= " ", size_thumb =250
 
 
 
-write_items_toml <- function(data = allresults, filenamepath = "data/items.toml") {
+write_items_toml <- function(data = allresults, filenamepath = "data/items.toml", pathtofigurefoler= "ResultGallery/Figures/") {
   
   fileConn = file (filenamepath)
   cat("",file=filenamepath,append=FALSE)
@@ -50,8 +50,8 @@ write_items_toml <- function(data = allresults, filenamepath = "data/items.toml"
   for (i in c(1:nrow(data))){
     text = "\n[[items]]"
     text = paste0 (text,  '\n ', 'title = "', data$Title [i], '"')
-    text = paste0 (text,  '\n ', 'image = "hall-of-results_data/Figures/', data$image [i], '"')
-    text = paste0 (text,  '\n ', 'thumb = "hall-of-results_data/Figures/', data$thumb [i], '"')
+    text = paste0 (text,  '\n ', 'image = "',pathtofigurefoler, data$image [i], '"')
+    text = paste0 (text,  '\n ', 'thumb = "',pathtofigurefoler, data$thumb [i], '"')
     text = paste0 (text,  '\n ', 'alt = "', data$alt [i], '"')
     text = paste0 (text,  '\n ', 'description = "', data$description [i], '"')
     text = paste0 (text,  '\n ', 'url = "', data$url [i], '"')
