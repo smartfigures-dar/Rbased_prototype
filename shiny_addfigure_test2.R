@@ -16,8 +16,9 @@ library(blogdown)
 source("functions.R")
 library(rdrop2)
 
-pathfolder ="static/ResultGallery"
-pathfigure = paste0(pathfolder,"/Figures/")
+problematicpubli= c()
+pathfolder ="./static/ResultGallery"
+pathfigure = paste0(pathfolder,"/figures/")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
