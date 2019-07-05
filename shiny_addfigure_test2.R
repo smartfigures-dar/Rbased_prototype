@@ -20,6 +20,8 @@ problematicpubli= c()
 pathfolder ="./static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
+blogdown::install_hugo()
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     # Application title
