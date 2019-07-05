@@ -10,7 +10,7 @@ library (knitr)
 ## give here url of publication where the copyrights issues were not cleared.
 problematicpubli= c()
 pathfolder ="static/ResultGallery"
-pathfigure = paste0(pathfolder,"/Figures/")
+pathfigure = paste0(pathfolder,"/figures/")
 
 shiny::runApp("shiny_addfigure_test.R")
 source (file ="hallcreator.R")

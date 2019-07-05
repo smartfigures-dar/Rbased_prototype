@@ -12,7 +12,7 @@ source("functions.R")
 # }
 
 #pathfolder ="static/hall-of-results_data"
-#pathfigure = paste0(pathfolder,"/Figures/")
+#pathfigure = paste0(pathfolder,"/figures/")
 
 
 allresults <- list.files(path = pathfolder, full.names = TRUE, recursive = TRUE, pattern = ".tsv") %>% 

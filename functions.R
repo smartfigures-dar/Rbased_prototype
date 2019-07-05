@@ -42,20 +42,22 @@ makethumbnail <- function(theimage, status= "draft", title= " ", size_thumb =250
 
 
 
-write_items_toml <- function(data = allresults, filenamepath = "data/items.toml", pathtofigurefoler= "ResultGallery/Figures/") {
+write_items_toml <- function(data = allresults, filenamepath = "data/items.toml", pathtofigurefoler= "ResultGallery/figures/") {
+  if (nrow(data)>0) {
+    fileConn = file (filenamepath)
+    cat("",file=filenamepath,append=FALSE)
+    
+    for (i in c(1:nrow(data))){
+      text = "\n[[items]]"
+      text = paste0 (text,  '\n ', 'title = "', data$Title [i], '"')
+      text = paste0 (text,  '\n ', 'image = "',pathtofigurefoler, data$image [i], '"')
+      text = paste0 (text,  '\n ', 'thumb = "',pathtofigurefoler, data$thumb [i], '"')
+      text = paste0 (text,  '\n ', 'alt = "', data$alt [i], '"')
+      text = paste0 (text,  '\n ', 'description = "', data$description [i], '"')
+      text = paste0 (text,  '\n ', 'url = "', data$url [i], '"')
+      cat(text,file=filenamepath,append=TRUE)
+  }
   
-  fileConn = file (filenamepath)
-  cat("",file=filenamepath,append=FALSE)
-  
-  for (i in c(1:nrow(data))){
-    text = "\n[[items]]"
-    text = paste0 (text,  '\n ', 'title = "', data$Title [i], '"')
-    text = paste0 (text,  '\n ', 'image = "',pathtofigurefoler, data$image [i], '"')
-    text = paste0 (text,  '\n ', 'thumb = "',pathtofigurefoler, data$thumb [i], '"')
-    text = paste0 (text,  '\n ', 'alt = "', data$alt [i], '"')
-    text = paste0 (text,  '\n ', 'description = "', data$description [i], '"')
-    text = paste0 (text,  '\n ', 'url = "', data$url [i], '"')
-    cat(text,file=filenamepath,append=TRUE)
   }
 }
 
@@ -79,14 +81,14 @@ update_thumnail <- function(metadata_file) {
   #library (magick)
   #source("functions.r")
   
-  a = image_read(paste0("static/hall-of-results_data/Figures/", imagepath))
+  a = image_read(paste0("static/hall-of-results_data/figures/", imagepath))
   size_thumb_here = ifelse (headers$Highlighted,500, 250)
   thumb = makethumbnail(theimage = a,
                         status = status1,
                         title = shortname, size_thumb = size_thumb_here)
   image_write(
     thumb,
-    path = paste0("static/hall-of-results_data/Figures/", thumbpath),
+    path = paste0("static/hall-of-results_data/figures/", thumbpath),
     format = "png"
   )
 }
