@@ -26,8 +26,11 @@ blogdown::install_hugo()
 ui <- fluidPage(
     # Application title
     titlePanel("Result Gallery application"),
-    
-    
+    fluidRow("V.0.1 beta, data stored on dropbox, i.e. not secure. You need to upload your dropbox identification, see documentation on github: https://github.com/smartfigures-dar/SmartFig_Rbased_prototype"
+    ),
+    fluidRow("please do not share the information you would access here, not even talk about it without the consent of the authors.
+             "
+    ),
     # Sidebar with a slider input for number of bins
 
     
