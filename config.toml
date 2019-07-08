@@ -18,8 +18,8 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
     # Meta
-    title = "Smart experimental results"
-    subtitle = "visualise the latest results from the lab"
+    #title = "Result gallery"
+    subtitle = "For internal use only!"
     author = "Julien Colomb, Matthew Larkum"
     description = ""
     keywords = "Hugo, Hugo theme, grid theme, portfolio, bookmarks, collection, contacts"

@@ -6,6 +6,7 @@
 #
 #    http://shiny.rstudio.com/
 #install.packages (c("shiny","dplyr","readr","magick","rcrossref","blogdown","rdrop2", "pander"))
+deployed =TRUE
 
 library(shiny)
 library(dplyr)
@@ -20,7 +21,8 @@ problematicpubli= c()
 pathfolder ="./static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
-blogdown::install_hugo()
+if (deployed) blogdown::install_hugo()
+
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -40,7 +42,7 @@ ui <- fluidPage(
         tabPanel(
             "Upload your dropbox token to read and save SmartFigures",
             
-            fileInput("TOKENDROP", "upload your dropbox authentificator"),
+            fileInput("TOKENDROP", "upload your dropbox authentificator", accept = ".rds"),
             actionButton("hallcreation", "Update website with new information"),
             actionButton("reload", "reload gallery"),
             "rest not implemented"
@@ -115,7 +117,7 @@ server <- function(input, output, session) {
         source("figureimport.R", local = TRUE)
 
         source(file ="hallcreator.R", local = TRUE)
-        blogdown::hugo_build()
+        blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
         output$frame <- renderUI({
             
             my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
@@ -135,7 +137,7 @@ server <- function(input, output, session) {
         source(file = "rdrop2use.R", local = TRUE)
         
         source(file ="hallcreator.R", local = TRUE)
-        blogdown::hugo_build()
+        blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
         output$frame <- renderUI({
             
             my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")

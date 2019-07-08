@@ -12,14 +12,14 @@ problematicpubli= c()
 pathfolder ="static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
-shiny::runApp("shiny_addfigure_test.R")
+#shiny::runApp("shiny_addfigure_test.R")
 source (file ="hallcreator.R")
 blogdown::serve_site()
 
 blogdown::hugo_build()
 
 blogdown::hugo_cmd("--config config.toml,config_pub.toml") #bulid dat version
-
+blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
 ##setwd("website-cards")
 #blogdown::new_site(theme="bul-ikana/hugo-cards", hostname = "github.com")
 #blogdown::serve_site()
