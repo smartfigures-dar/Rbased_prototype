@@ -154,6 +154,8 @@ server <- function(input, output, session) {
         })
         
     output$frame <- renderUI({
+        tokenRG <- readRDS(input$TOKENDROP$datapath)
+        if (!exists("tokenRG")) return (NULL)
         
         my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
         print(my_test)
