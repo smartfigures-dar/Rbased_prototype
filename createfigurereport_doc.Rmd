@@ -1,0 +1,75 @@
+---
+title: "`r metadata$Title`"
+output:
+  word_document
+---
+
+
+```{r, echo = FALSE}
+
+knitr::include_graphics(paste0(pathfigure,metadata$image))
+```
+
+`r metadata$description`
+
+
+
+```{r, echo=FALSE}
+#cat("\\newpage")
+
+#cat("\\begin{multicols}{2}")
+knitr::raw_html("vspace = 1cm")
+knitr::raw_latex("\\begin{multicols}{2}")
+```
+
+
+```{r, echo = FALSE}
+
+knitr::include_graphics(paste0(pathfigure,metadata$thumb))
+```
+
+
+
+Link to smartfigure: http://somthinghere/`r metadata$url`
+
+
+```{r,echo = FALSE, results='asis'}
+table1 = metadata [,-c(1:5)]
+table2 = table1[,which(table1 == "to_Fill", arr.ind = FALSE)]
+table3= table1[,-which(table1 == "to_Fill", arr.ind = FALSE)]
+
+cat ("missing metadata fields:
+     
+")
+cat(paste0("**",names(table2), "**",
+           collapse = "
+           
+"))
+cat("
+    
+    ")
+```
+
+```{r xtable, results="asis", echo=FALSE}
+
+#panderOptions("table.alignment.default", "left")
+#pander (t(table3), style = "rmarkdown")
+table4 = table3 %>%
+  select (-description, -comment)
+
+table= xtable::xtable(t(table4))
+xtable::print.xtable(table, floating = FALSE, comment=FALSE, include.colnames = FALSE)
+
+```
+
+```{r, echo=FALSE}
+knitr::raw_latex("\\end{multicols}")
+
+```
+
+Caption: `r metadata$description`
+
+---
+
+Comments: `r metadata$comment`
+
