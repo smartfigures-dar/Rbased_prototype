@@ -17,6 +17,8 @@ dropboxfolder = paste0(pathfolder,"/outputtest")
 rmarkdown::render("createfigurereport_pdf2.Rmd", 
                   output_file = filename)
 
+exportimage= magick::image_read_pdf(filename)
+magick::image_write(exportimage[2], format = "png", path=paste0(filename,"exp.png"))
 
                   
                   #, knit_root_dir =pathfigure)
