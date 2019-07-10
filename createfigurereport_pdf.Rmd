@@ -27,8 +27,11 @@ knitr::raw_latex("\\begin{multicols}{2}")
 
 
 ```{r, echo = FALSE}
+#size
+image = image_info(image_read(paste0(pathfigure,metadata$image)))
 
-knitr::include_graphics(paste0(pathfigure,metadata$thumb))
+sizing=max(image$width, image$height)/500
+knitr::include_graphics(paste0(pathfigure,metadata$thumb), dpi = sizing)
 ```
 
 
@@ -38,7 +41,9 @@ Link to smartfigure: https://www.dropbox.com/home/`r dropboxfolder`
 
 ```{r,echo = FALSE, results='asis'}
 table1 = metadata [,-c(1:5)]
-table2 = table1[,which(table1 == "to_Fill", arr.ind = FALSE)]
+col_tofill = which(table1 == "to_Fill", arr.ind = FALSE)
+if (!identical(col_tofill, integer(0) ) ) {
+  table2 = table1[,which(table1 == "to_Fill", arr.ind = FALSE)]
 table3= table1[,-which(table1 == "to_Fill", arr.ind = FALSE)]
 
 cat ("missing metadata fields:
@@ -51,14 +56,21 @@ cat(paste0("**",names(table2), "**",
 cat("
     
     ")
+table4 = table3 %>%
+  select (-description, -comment)
+} else {
+  cat ("no missing field, great !!")
+  table4 = table1 %>%
+  select (-description, -comment)
+}
+
 ```
 
 ```{r xtable, results="asis", echo=FALSE}
 
 #panderOptions("table.alignment.default", "left")
 #pander (t(table3), style = "rmarkdown")
-table4 = table3 %>%
-  select (-description, -comment)
+
 
 table= xtable::xtable(t(table4))
 xtable::print.xtable(table, floating = FALSE, comment=FALSE, include.colnames = FALSE)
