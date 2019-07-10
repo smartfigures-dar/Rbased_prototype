@@ -10,13 +10,15 @@ if (FALSE){
   status1 = "draft"
   caption = "something scientific, right"
   url = "none"
-  imagepath= "static/hall-of-results_data/Figures/atg6-9_KD_in_brain/atg6-9_KD_in_brain.png"
+  imagepath= "static/images/copyright.png"
   update=FALSE
   comment = ""
   #imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
   highlight = "FALSE"
   
 }
+dropboxmessage = "Beware files were not saved on dropbox, token not uploaded."
+
 size_thumb_here = ifelse (highlight,500, 250)
  
 
@@ -100,12 +102,31 @@ image_write(thumb, path =paththumb, format = "png")
 #a= image_read("static/images/thumbs/4.png")
 
 
-##dropbox
 
-x <- drop_search("resultgallery", dtoken = tokenRG)
-dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",filename)
-drop_acc(dtoken = tokenRG)
-drop_create(dropboxfolder)
-drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
-drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG)
-drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+##dropbox, only done if dropbox token is given.
+
+if(exists("tokenRG")){
+  x <- drop_search("resultgallery", dtoken = tokenRG)
+  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",filename)
+  drop_acc(dtoken = tokenRG)
+  drop_create(dropboxfolder)
+  drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
+  drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  
+  metadata= headers
+  filepath = paste0(directory,"/",filename,"exp.pdf")
+  
+  ## render Rmarkdownfile to get pdf
+  
+  rmarkdown::render("createfigurereport_pdf.Rmd", 
+                    output_file = filepath)
+  
+  exportimage= magick::image_read_pdf(filepath)
+  magick::image_write(exportimage[2], format = "png", path=paste0(directory,"/",filename,"exp.png"))
+  
+  drop_upload(file =paste0(directory,"/",filename,"exp.png"),path =paste0(x$matches[[1]]$metadata$name,"/slack"), dtoken = tokenRG)
+  dropboxmessage = "file saved on dropbox"
+}
+
+

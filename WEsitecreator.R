@@ -5,6 +5,8 @@ library(rcrossref) ## getting year published from doi
 library(pander) ## creating reports
 source("functions.R")
 library (knitr)
+library(rmarkdown)
+
 
 #blogdown::new_site(theme="aerohub/hugrid", hostname = "github.com") #used to create the website,kept for reference
 ## give here url of publication where the copyrights issues were not cleared.

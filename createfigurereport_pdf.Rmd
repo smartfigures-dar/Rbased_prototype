@@ -7,13 +7,15 @@ output:
 ---
 
 
-
 ```{r, echo = FALSE}
 
 knitr::include_graphics(paste0(pathfigure,metadata$image))
+#needs metadata and directory
 ```
 
 `r metadata$description`
+
+
 
 ```{r, echo=FALSE}
 #cat("\\newpage")
@@ -31,7 +33,7 @@ knitr::include_graphics(paste0(pathfigure,metadata$thumb))
 
 
 
-Link to smartfigure: http://somthinghere/`r metadata$url`
+Link to smartfigure: https://www.dropbox.com/home/`r dropboxfolder`
 
 
 ```{r,echo = FALSE, results='asis'}
@@ -73,7 +75,4 @@ Caption: `r metadata$description`
 ---
 
 Comments: `r metadata$comment`
-
-
-
 

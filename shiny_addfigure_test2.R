@@ -16,6 +16,7 @@ library(rcrossref)
 library(blogdown)
 source("functions.R")
 library(rdrop2)
+library(pdftools)
 
 problematicpubli= c()
 pathfolder ="./static/ResultGallery"
@@ -74,6 +75,7 @@ ui <- fluidPage(
                 textInput("url", "doi or webaddress of the paper/preprint", "none"),
                 actionButton("button", "produce and save SER"),
                 verbatimTextOutput("valuesaved"),
+                verbatimTextOutput("dropboxmessage"),
                 
                 "Preview :",
                 verbatimTextOutput("valuetitle"),
@@ -115,7 +117,10 @@ server <- function(input, output, session) {
         highlight = input$highlight
         tokenRG <- readRDS(input$TOKENDROP$datapath)
         source("figureimport.R", local = TRUE)
-
+        output$dropboxmessage<- renderText({
+            dropboxmessage
+        })
+        
         source(file ="hallcreator.R", local = TRUE)
         blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
         output$frame <- renderUI({
@@ -127,6 +132,7 @@ server <- function(input, output, session) {
         output$valuesaved <- renderText({
             "SmartFigure saved, Gallery updated"
         })
+        
         
        
     })
