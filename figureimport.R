@@ -117,7 +117,7 @@ if(exists("tokenRG")){
   metadata= headers
   filepath = paste0(directory,"/",filename,"exp.pdf")
   
-  ## render Rmarkdownfile to get pdf
+  ## render Rmarkdownfile to get pdf, save a copy of second page as an image
   
   rmarkdown::render("createfigurereport_pdf.Rmd", 
                     output_file = filepath)
@@ -127,6 +127,10 @@ if(exists("tokenRG")){
   
   drop_upload(file =paste0(directory,"/",filename,"exp.png"),path =paste0(x$matches[[1]]$metadata$name,"/slack"), dtoken = tokenRG)
   dropboxmessage = "file saved on dropbox"
+  ## save original pdf if existant
+  if (imagetype == ".pdf"){
+    drop_upload(file =paste0(oripath),path =paste0(dropboxfolder), dtoken = tokenRG)
+  }
 }
 
 
