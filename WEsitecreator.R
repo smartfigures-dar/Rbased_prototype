@@ -11,7 +11,7 @@ library(rmarkdown)
 #blogdown::new_site(theme="aerohub/hugrid", hostname = "github.com") #used to create the website,kept for reference
 ## give here url of publication where the copyrights issues were not cleared.
 problematicpubli= c()
-pathfolder ="static/fortests_ResultGallery"
+pathfolder ="static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
 #shiny::runApp("shiny_addfigure_test.R")
