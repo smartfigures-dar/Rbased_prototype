@@ -6,7 +6,9 @@
 #
 #    http://shiny.rstudio.com/
 #install.packages (c("shiny","dplyr","readr","magick","rcrossref","blogdown","rdrop2", "pander"))
-deployed =TRUE
+
+deployed =FALSE # deployed on shinyapps.io ?
+dropboxuse = deployed # should the dropbox integration be used
 
 library(shiny)
 library(dplyr)
@@ -38,9 +40,9 @@ ui <- fluidPage(
 
     
     # Show a plot of the generated distribution
-    tabsetPanel(
+    tabsetPanel(id="maintabset",
         
-        tabPanel(
+        tabPanel("dropboxupload",
             "Upload your dropbox token to read and save SmartFigures",
             
             fileInput("TOKENDROP", "upload your dropbox authentificator", accept = ".rds"),
@@ -92,6 +94,7 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
     
+    if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
     
     observeEvent(input$button, {
         
@@ -115,7 +118,8 @@ server <- function(input, output, session) {
         update = input$update
         comment = input$Comment
         highlight = input$highlight
-        tokenRG <- readRDS(input$TOKENDROP$datapath)
+        if(dropboxuse) tokenRG <- readRDS(input$TOKENDROP$datapath)
+        
         source("figureimport.R", local = TRUE)
         output$dropboxmessage<- renderText({
             dropboxmessage
@@ -154,8 +158,11 @@ server <- function(input, output, session) {
         })
         
     output$frame <- renderUI({
-        tokenRG <- readRDS(input$TOKENDROP$datapath)
-        if (!exists("tokenRG")) return (NULL)
+        if(dropboxuse){
+            tokenRG <- readRDS(input$TOKENDROP$datapath)
+            if (!exists("tokenRG")) return (NULL)
+        }
+        
         
         my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
         print(my_test)
