@@ -16,7 +16,7 @@ pathfigure = paste0(pathfolder,"/figures/")
 
 #shiny::runApp("shiny_addfigure_test.R")
 source (file ="hallcreator.R")
-blogdown::serve_site()
+blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
 
 blogdown::hugo_build()
 

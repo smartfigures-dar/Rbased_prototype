@@ -1,15 +1,8 @@
 
 [[items]]
- title = "NA"
- image = "ResultGallery/Figures/NA"
- thumb = "ResultGallery/Figures/NA"
- alt = "NA"
- description = "NA"
- url = "NA"
-[[items]]
- title = ""
- image = "ResultGallery/Figures/"
- thumb = "ResultGallery/Figures/"
- alt = ""
- description = ""
- url = ""
+ title = "Never too busy"
+ image = "ResultGallery/figures/Never_too_busy/Never_too_busy.png"
+ thumb = "ResultGallery/figures/Never_too_busy/Never_too_busy_nail.png"
+ alt = "something went wrong"
+ description = "Reconsider if you think you have no time to learn something"
+ url = "none"
