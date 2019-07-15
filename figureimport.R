@@ -2,7 +2,7 @@
 ##-- notes
 ## if the upload is a pdf, only the first page will be used
 
-pathfigure = "static/hall-of-results_data/Figures/"
+#pathfigure = "static/hall-of-results_data/Figures/"
 
 ## entered variables
 if (FALSE){
@@ -10,13 +10,15 @@ if (FALSE){
   status1 = "draft"
   caption = "something scientific, right"
   url = "none"
-  imagepath= "static/hall-of-results_data/Figures/Active_dCaAP_impact_on_soma.png"
+  imagepath= "static/images/copyright.png"
   update=FALSE
   comment = ""
-  imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
+  #imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
   highlight = "FALSE"
   
 }
+dropboxmessage = "Beware files were not saved on dropbox, token not uploaded."
+
 size_thumb_here = ifelse (highlight,500, 250)
  
 
@@ -38,7 +40,7 @@ dir.create (directory)
 
 ##------------------------------------ write metadata
 
-headers =  read.delim("static/hall-of-results_data/head_hall-of-resluts_metadata.csv",
+headers =  read.delim(paste0(pathfolder,"/head_hall-of-resluts_metadata.csv"),
                       colClasses = "character")
 # work with doi
 yearpub = "NA"
@@ -99,5 +101,36 @@ image_write(thumb, path =paththumb, format = "png")
 
 #a= image_read("static/images/thumbs/4.png")
 
+
+
+##dropbox, only done if dropbox token is given.
+
+if(exists("tokenRG")){
+  x <- drop_search("resultgallery", dtoken = tokenRG)
+  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",filename)
+  drop_acc(dtoken = tokenRG)
+  drop_create(dropboxfolder)
+  drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
+  drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  
+  metadata= headers
+  filepath = paste0(directory,"/",filename,"exp.pdf")
+  
+  ## render Rmarkdownfile to get pdf, save a copy of second page as an image (trimmed)
+  
+  rmarkdown::render("createfigurereport_pdf2.Rmd", 
+                    output_file = filepath)
+  exportimage= magick::image_read_pdf(filepath)
+  magick::image_write(image_trim(exportimage[2]), format = "png", path=paste0(directory,"/",filename,"exp.png"))
+  
+  drop_upload(file =paste0(directory,"/",filename,"exp.png"),path =paste0(x$matches[[1]]$metadata$name,"/slack"), dtoken = tokenRG)
+  dropboxmessage = "file saved on dropbox"
+  
+  ## save original pdf if existant
+  if (imagetype == ".pdf"){
+    drop_upload(file =paste0(oripath),path =paste0(dropboxfolder), dtoken = tokenRG)
+  }
+}
 
 

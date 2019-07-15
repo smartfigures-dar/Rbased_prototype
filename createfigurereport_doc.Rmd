@@ -1,11 +1,8 @@
 ---
 title: "`r metadata$Title`"
-header-includes:
-   - \usepackage{multicol}
 output:
-  pdf_document
+  word_document
 ---
-
 
 
 ```{r, echo = FALSE}
@@ -15,11 +12,13 @@ knitr::include_graphics(paste0(pathfigure,metadata$image))
 
 `r metadata$description`
 
+
+
 ```{r, echo=FALSE}
 #cat("\\newpage")
 
 #cat("\\begin{multicols}{2}")
-knitr::raw_latex("\\newpage")
+knitr::raw_html("vspace = 1cm")
 knitr::raw_latex("\\begin{multicols}{2}")
 ```
 
@@ -73,7 +72,4 @@ Caption: `r metadata$description`
 ---
 
 Comments: `r metadata$comment`
-
-
-
 

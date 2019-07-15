@@ -1,21 +1,24 @@
 ## figure export
 
-pathfigure = "static/hall-of-results_data/Figures/"
+#pathfigure = "static/hall-of-results_data/Figures/"
 
 ##readmetadata
 
-allresults <- list.files(path = "static/hall-of-results_data", full.names = TRUE, recursive = TRUE, pattern = ".tsv") 
+allresults <- list.files(path = pathfolder, full.names = TRUE, recursive = TRUE, pattern = ".tsv") 
 
-tomodify = allresults [7]
+tomodify = allresults [3]
 metadata=readmeta(tomodify)
 filename = strtrim(gsub("\\s", "_", tomodify) ,nchar(tomodify)-8)
 filename = paste0(filename,"_V.pdf")
 
 ## render Rmarkdownfile to get pdf
 
-rmarkdown::render("createfigurereport.Rmd", 
+dropboxfolder = paste0(pathfolder,"/outputtest")
+rmarkdown::render("createfigurereport_pdf2.Rmd", 
                   output_file = filename)
 
+exportimage= magick::image_read_pdf(filename)
+magick::image_write(exportimage[2], format = "png", path=paste0(filename,"exp.png"))
 
                   
                   #, knit_root_dir =pathfigure)
