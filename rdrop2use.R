@@ -23,8 +23,10 @@ for (j in folders$path_display){
 
 for (j in files$path_display){
   print(j)
-  drop_download(j,local_path = paste0("./static",j), dtoken = tokenRG)
+  drop_download(j,local_path = paste0("./static",j), dtoken = tokenRG, overwrite = TRUE)
 }
 
+unlink ("./static/ResultGallery_old",recursive = TRUE)
+file.rename ("./static/ResultGallery", "./static/ResultGallery_old")
 file.rename (paste0("./static/",folders$name[1]), "./static/ResultGallery")
 
