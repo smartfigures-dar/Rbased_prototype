@@ -27,8 +27,10 @@ pathfigure = paste0(pathfolder,"/figures/")
 if (deployed) blogdown::install_hugo()
 
 
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
+    
     # Application title
     titlePanel("Result Gallery application"),
     fluidRow("V.0.1 beta, data stored on dropbox, i.e. not secure. You need to upload your dropbox identification, see documentation on github: https://github.com/smartfigures-dar/SmartFig_Rbased_prototype"
@@ -37,64 +39,70 @@ ui <- fluidPage(
              "
     ),
     # Sidebar with a slider input for number of bins
-
+    
     
     # Show a plot of the generated distribution
     tabsetPanel(id="maintabset",
-        
-        tabPanel("dropboxupload",
-            "Upload your dropbox token to read and save SmartFigures",
-            
-            fileInput("TOKENDROP", "upload your dropbox authentificator", accept = ".rds"),
-            actionButton("hallcreation", "Update website with new information"),
-            actionButton("reload", "reload gallery"),
-            "rest not implemented"
-        )
-        ,
-        tabPanel(
-            "See  Gallery",
-            #actionButton("hallcreation", "Update website with new information"),
-            fluidRow(htmlOutput("frame"))
-        )
-        ,
-        
-        tabPanel(
-            "Import new figures",
-            tagList(
-                checkboxInput("update", "Are you updating an existing entry", FALSE), 
-                fileInput("Panel1", "Choose Image",
-                          multiple = FALSE,
-                          accept = c('image/png', 'image/jpeg')  
-                ),  
-                textInput("Title", "Title of the figure", "keep it short, no more than 30 characters please"),
-                selectInput("Status", "Status of the figure:",
-                            c("Published" = "Published",
-                              "Experiment is finished" = "preprint",
-                              "Draft, review request" = "draft")),
-                checkboxInput("highlight", "Is this a highlighted figure ?"),
-                textAreaInput("Caption", "Caption of the figure", ""),
-                textInput("Comment", "Comment about the figure", ""),
-                textInput("url", "doi or webaddress of the paper/preprint", "none"),
-                actionButton("button", "produce and save SER"),
-                verbatimTextOutput("valuesaved"),
-                verbatimTextOutput("dropboxmessage"),
                 
-                "Preview :",
-                verbatimTextOutput("valuetitle"),
-                plotOutput("plot3"),
-                verbatimTextOutput("valuecap")
-            )
-            
-        )
-        
-        
+                tabPanel("dropboxupload",
+                         "Upload your dropbox token to read and save SmartFigures",
+                         
+                         fileInput("TOKENDROP", "upload your dropbox authentificator", accept = ".rds"),
+                         actionButton("hallcreation", "Update website with new information"),
+                         actionButton("reload", "reload gallery"),
+                         "rest not implemented"
+                )
+                ,
+                tabPanel(
+                    "See  Gallery",
+                    #actionButton("hallcreation", "Update website with new information"),
+                    fluidRow(htmlOutput("frame"))
+                )
+                ,
+                
+                tabPanel(
+                    "Import new figures",
+                    tagList(
+                        checkboxInput("update", "Are you updating an existing entry", FALSE), 
+                        fileInput("Panel1", "Choose Image",
+                                  multiple = FALSE,
+                                  accept = c('image/png', 'image/jpeg')  
+                        ),  
+                        textInput("Title", "Title of the figure"),
+                        selectInput("Status", "Status of the figure:",
+                                    c("Published" = "Published",
+                                      "Experiment is finished" = "preprint",
+                                      "Draft, review request" = "draft")),
+                        checkboxInput("highlight", "Is this a highlighted figure ?"),
+                        textAreaInput("Caption", "Caption of the figure", ""),
+                        textInput("Comment", "Comment about the figure", ""),
+                        textInput("url", "doi or webaddress of the paper/preprint", "none"),
+                        actionButton("button", "produce and save SER"),
+                        verbatimTextOutput("valuesaved"),
+                        verbatimTextOutput("dropboxmessage"),
+                        
+                        "Preview :",
+                        verbatimTextOutput("valuetitle"),
+                        plotOutput("plot3"),
+                        verbatimTextOutput("valuecap")
+                    )
+                    
+                )
+                
+                
     )
 )
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
-    
     if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
+    values <- reactiveValues(title = "upload file first")
+    
+    observe({
+        imagename = input$Panel1$name
+        imagename = titleify (imagename)
+        updateTextInput(session, "Title", value  = imagename)
+    })
     
     observeEvent(input$button, {
         
@@ -105,10 +113,10 @@ server <- function(input, output, session) {
         
     })
     
-
+    
     observeEvent(input$button, {
         imagepath = input$Panel1$datapath
-        title1 = input$Title
+        title1 = titleify(input$Title)
         output$valuecap <- renderText({
             input$Caption
         })
@@ -119,7 +127,6 @@ server <- function(input, output, session) {
         comment = input$Comment
         highlight = input$highlight
         if(dropboxuse) tokenRG <- readRDS(input$TOKENDROP$datapath)
-        
         source("figureimport.R", local = TRUE)
         output$dropboxmessage<- renderText({
             dropboxmessage
@@ -138,7 +145,7 @@ server <- function(input, output, session) {
         })
         
         
-       
+        
     })
     
     observeEvent(input$hallcreation, {
@@ -155,14 +162,13 @@ server <- function(input, output, session) {
             my_test
         })
         
-        })
-        
+    })
+    
     output$frame <- renderUI({
         if(dropboxuse){
             tokenRG <- readRDS(input$TOKENDROP$datapath)
             if (!exists("tokenRG")) return (NULL)
         }
-        
         
         my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
         print(my_test)
@@ -192,7 +198,7 @@ server <- function(input, output, session) {
     
     
     output$valuetitle <- renderText({
-        input$Title
+        titleify(input$Title)
     })
     
     

@@ -92,3 +92,14 @@ update_thumnail <- function(metadata_file) {
     format = "png"
   )
 }
+
+
+titleify <- function(character){
+  
+  thetitle = sub(pattern = "(.*)\\..*$", replacement = "\\1",character)
+  thetitle =
+    gsub("[^[:alnum:]_]", "_", thetitle)
+  
+  thetitle =  strtrim(tolower(thetitle), 27)
+  return (thetitle)
+}
