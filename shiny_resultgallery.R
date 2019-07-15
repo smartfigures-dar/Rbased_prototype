@@ -7,8 +7,10 @@
 #    http://shiny.rstudio.com/
 #install.packages (c("shiny","dplyr","readr","magick","rcrossref","blogdown","rdrop2", "pander"))
 
-deployed =FALSE # deployed on shinyapps.io ?
-dropboxuse = deployed # should the dropbox integration be used
+if (!exists("deployed")){
+    deployed =TRUE # deployed on shinyapps.io ?
+    dropboxuse = deployed # should the dropbox integration be used
+}
 
 library(shiny)
 library(dplyr)

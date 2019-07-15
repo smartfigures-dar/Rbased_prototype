@@ -1,3 +1,9 @@
+deployed =FALSE # deployed on shinyapps.io ?
+dropboxuse = deployed # should the dropbox integration be used
+
+shiny::runApp("shiny_resultgallery.R")
+
+
 library(dplyr)
 library(readr)
 library (magick)
@@ -14,7 +20,7 @@ problematicpubli= c()
 pathfolder ="static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
-#shiny::runApp("shiny_addfigure_test.R")
+
 source (file ="hallcreator.R")
 blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
 
