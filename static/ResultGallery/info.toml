@@ -1,3 +1,4 @@
+lab = "lkm"
 [params]
     # Meta
     title = "modify static/ResultGallery/info.toml to change this title"

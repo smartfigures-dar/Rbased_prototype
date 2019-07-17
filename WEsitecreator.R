@@ -1,6 +1,6 @@
 deployed =FALSE # deployed on shinyapps.io ?
 dropboxuse = deployed # should the dropbox integration be used
-
+author = "jco"
 shiny::runApp("shiny_resultgallery.R")
 
 
@@ -19,6 +19,9 @@ library(rmarkdown)
 problematicpubli= c()
 pathfolder ="static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
+author = "jco"
+file.lines <- scan("static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+source(textConnection(file.lines))
 
 
 source (file ="hallcreator.R")

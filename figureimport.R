@@ -6,6 +6,8 @@
 
 ## entered variables
 if (FALSE){
+  pathfolder ="static/ResultGallery"
+  pathfigure = paste0(pathfolder,"/figures/")
   title1 = "Active dCaAP impact on soma and a long suff here to be cut our...."
   status1 = "draft"
   caption = "something scientific, right"
@@ -15,6 +17,8 @@ if (FALSE){
   comment = ""
   #imagepath= "static/hall-of-results_data/Figures/metad/metad_exp.pdf"
   highlight = "FALSE"
+  author = "jco"
+  lab="lkm"
   
 }
 dropboxmessage = "Beware files were not saved on dropbox, token not uploaded."
@@ -22,20 +26,21 @@ dropboxmessage = "Beware files were not saved on dropbox, token not uploaded."
 size_thumb_here = ifelse (highlight,500, 250)
  
 
-filename = strtrim(gsub("\\s", "_", title1) ,27)
+filename = titleify(title1)$file
 
 ##------------------------------------ create directory for the smartfigure
 
-directory = paste0(pathfigure,filename)
+directory = paste0(pathfigure,lab,author,titleify(title1)$folder)
 
 numb=0
 while( dir.exists (directory) && (!update)){
   numb=numb+1
   
-  directory = paste0(pathfigure,filename,numb)
+  directory = paste0(pathfigure,lab,author,titleify(title1)$folder,numb)
 }
 
-if (directory != paste0(pathfigure,filename) ) filename =paste0(filename,numb)
+filename =paste0(filename,formatC(numb, width=2, flag="0"))
+
 dir.create (directory)
 
 ##------------------------------------ write metadata

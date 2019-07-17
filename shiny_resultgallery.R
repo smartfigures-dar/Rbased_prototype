@@ -26,6 +26,11 @@ problematicpubli= c()
 pathfolder ="./static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
+file.lines <- scan("./static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+source(textConnection(file.lines), local = TRUE)
+
+
+
 if (deployed) blogdown::install_hugo()
 
 
@@ -65,6 +70,7 @@ ui <- fluidPage(
                 tabPanel(
                     "Import new figures",
                     tagList(
+                        textInput( "author", "Your name",lab),
                         checkboxInput("update", "Are you updating an existing entry", FALSE), 
                         fileInput("Panel1", "Choose Image",
                                   multiple = FALSE,
@@ -102,7 +108,7 @@ server <- function(input, output, session) {
     
     observe({
         imagename = input$Panel1$name
-        imagename = titleify (imagename)
+        imagename = titleify (imagename)$file
         updateTextInput(session, "Title", value  = imagename)
     })
     
@@ -118,7 +124,7 @@ server <- function(input, output, session) {
     
     observeEvent(input$button, {
         imagepath = input$Panel1$datapath
-        title1 = titleify(input$Title)
+        title1 = input$Title
         output$valuecap <- renderText({
             input$Caption
         })
@@ -129,6 +135,8 @@ server <- function(input, output, session) {
         comment = input$Comment
         highlight = input$highlight
         if(dropboxuse) tokenRG <- readRDS(input$TOKENDROP$datapath)
+       
+        
         source("figureimport.R", local = TRUE)
         output$dropboxmessage<- renderText({
             dropboxmessage
@@ -200,7 +208,19 @@ server <- function(input, output, session) {
     
     
     output$valuetitle <- renderText({
-        titleify(input$Title)
+        paste0 (
+            "Title:",
+            input$Title,
+            "
+will be saved there:",
+            lab,
+            tolower(abbreviate(input$author,3)),
+            titleify(input$Title)$folder,
+            "/",
+            titleify(input$Title)$file,
+            ".png"
+        )
+        
     })
     
     

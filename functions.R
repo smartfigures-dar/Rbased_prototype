@@ -95,11 +95,21 @@ update_thumnail <- function(metadata_file) {
 
 
 titleify <- function(character){
-  
+  #get rid of all text after the last point (.png for example)
   thetitle = sub(pattern = "(.*)\\..*$", replacement = "\\1",character)
+  # get rid of special characters
   thetitle =
-    gsub("[^[:alnum:]_]", "_", thetitle)
+    tolower( gsub("[^[:alnum:]_]", " ", thetitle))
+  # make a short version
+  thetitle = iconv(thetitle,from ="utf8", to ="ASCII", sub= " ")
+  # get rid of multiple spaces
+  thetitle= stringr::str_squish(thetitle)
+  #getting output
+  output = c()
+  output$folder = gsub("[^[:alnum:]_]", "-", abbreviate(thetitle, minlength = 8))
   
-  thetitle =  strtrim(tolower(thetitle), 27)
-  return (thetitle)
+  thetitle =  gsub("[^[:alnum:]_]", "-", thetitle)
+  output$file = strtrim  (thetitle, 20)
+  #output
+  return (output)
 }
