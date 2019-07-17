@@ -1,7 +1,11 @@
 deployed =FALSE # deployed on shinyapps.io ?
 dropboxuse = deployed # should the dropbox integration be used
-author = "jco"
 shiny::runApp("shiny_resultgallery.R")
+
+## deploy the app
+unlink ("./static/ResultGallery/figures",recursive = TRUE)
+unlink ("./www",recursive = TRUE)
+## now deploy
 
 
 library(dplyr)
