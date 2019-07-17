@@ -173,6 +173,8 @@ server <- function(input, output, session) {
             print(my_test)
             my_test
         })
+        file.lines <- scan("./static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+        source(textConnection(file.lines), local = TRUE)
         
     })
     
