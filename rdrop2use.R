@@ -26,7 +26,7 @@ for (j in files$path_display){
   drop_download(j,local_path = paste0("./static",j), dtoken = tokenRG, overwrite = TRUE)
 }
 
-unlink ("./static/ResultGallery_old",recursive = TRUE)
-file.rename ("./static/ResultGallery", "./static/ResultGallery_old")
+unlink ("./static/ResultGallery",recursive = TRUE)
+
 file.rename (paste0("./static/",folders$name[1]), "./static/ResultGallery")
 
