@@ -70,17 +70,19 @@ ui <- fluidPage(
                 tabPanel(
                     "Import new figures",
                     tagList(
-                        textInput( "author", "Your name",lab),
-                        checkboxInput("update", "Are you updating an existing entry", FALSE), 
+                        
+                         
                         fileInput("Panel1", "Choose Image",
                                   multiple = FALSE,
                                   accept = c('image/png', 'image/jpeg')  
                         ),  
+                        textInput( "author", "Your name",lab),
                         textInput("Title", "Title of the figure"),
                         selectInput("Status", "Status of the figure:",
                                     c("Published" = "Published",
                                       "Experiment is finished" = "preprint",
                                       "Draft, review request" = "draft")),
+                        checkboxInput("update", "Are you updating an existing entry", FALSE),
                         checkboxInput("highlight", "Is this a highlighted figure ?"),
                         textAreaInput("Caption", "Caption of the figure", ""),
                         textInput("Comment", "Comment about the figure", ""),
