@@ -1,4 +1,4 @@
-#Result Galleries for research labs/consortium
+# Result Galleries for research labs/consortium
 
 This is a prototype aimed at gathering early feedback for the development of the Sdash system.
 
@@ -18,13 +18,13 @@ Your dropbox should contain a result gallery folder, you can see a template in t
 
 Nowe the application will download the data on the shinyapp.io server, and you can save new figures that will be saved on your dropbox. In the "slack" folder, a figure will also be uploaded, and you can use zapier to send that figure to (for example) slack. 
 
-# Notes
+## Notes
 
 The software was first developed on a private repository, so initial commit history is not available atm.
 You can also install the application on your server running R (or a Rstuio server application), then use the Wesitecreator.R file to set some variables before starting the app.
 
 
-# Installation
+## Installation
 
 
 For development:
