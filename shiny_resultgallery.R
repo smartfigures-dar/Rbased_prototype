@@ -147,6 +147,8 @@ server <- function(input, output, session) {
         update = input$update
         comment = input$Comment
         highlight = input$highlight
+        lab = values$lab
+        author = tolower(abbreviate(input$author,3))
         if(dropboxuse) tokenRG <- readRDS(input$TOKENDROP$datapath)
        
         
