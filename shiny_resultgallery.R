@@ -116,7 +116,7 @@ server <- function(input, output, session) {
     if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
     values <- reactiveValues(title = "upload file first", lab = "xxx")
     
-    file.lines <- scan("./static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+    file.lines <- scan("./static/ResultGallery/info.r", what=character(),  nlines=1, sep='\n')
     source(textConnection(file.lines), local = TRUE)
     
     observe({
@@ -156,7 +156,7 @@ server <- function(input, output, session) {
         })
         
         source(file ="hallcreator.R", local = TRUE)
-        blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
+        blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.r")
         output$frame <- renderUI({
             
             my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
