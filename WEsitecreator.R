@@ -24,7 +24,7 @@ problematicpubli= c()
 pathfolder ="static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 author = "jco"
-file.lines <- scan("static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+file.lines <- scan("static/ResultGallery/info.r", what=character(),  nlines=1, sep='\n')
 source(textConnection(file.lines))
 
 
