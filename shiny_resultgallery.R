@@ -26,8 +26,7 @@ problematicpubli= c()
 pathfolder ="./static/ResultGallery"
 pathfigure = paste0(pathfolder,"/figures/")
 
-file.lines <- scan("./static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
-source(textConnection(file.lines), local = TRUE)
+
 
 
 
@@ -40,10 +39,19 @@ ui <- fluidPage(
     
     # Application title
     titlePanel("Result Gallery application"),
-    fluidRow("V.0.1 beta, data stored on dropbox, i.e. not secure. You need to upload your dropbox identification, see documentation on github: https://github.com/smartfigures-dar/SmartFig_Rbased_prototype"
+    fluidRow(
+        column (6,
+                "V.0.1 beta, data stored on dropbox, i.e. not secure."
+        ),
+        column (6,
+        "please do not share the information you would access here, not even talk about it without the consent of the authors."
+        )
     ),
-    fluidRow("please do not share the information you would access here, not even talk about it without the consent of the authors.
-             "
+    
+    fluidRow(column(10, offset = 1,
+                    "Documentation and Bug reports via the",
+             tags$a(href="https://github.com/smartfigures-dar/SmartFig_Rbased_prototype/issues", "open source project hosted on github")
+                )
     ),
     # Sidebar with a slider input for number of bins
     
@@ -76,7 +84,7 @@ ui <- fluidPage(
                                   multiple = FALSE,
                                   accept = c('image/png', 'image/jpeg')  
                         ),  
-                        textInput( "author", "Your name",lab),
+                        textInput( "author", "Your name"),
                         textInput("Title", "Title of the figure"),
                         selectInput("Status", "Status of the figure:",
                                     c("Published" = "Published",
@@ -106,7 +114,10 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
     if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
-    values <- reactiveValues(title = "upload file first")
+    values <- reactiveValues(title = "upload file first", lab = "xxx")
+    
+    file.lines <- scan("./static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+    source(textConnection(file.lines), local = TRUE)
     
     observe({
         imagename = input$Panel1$name
@@ -217,7 +228,7 @@ server <- function(input, output, session) {
             input$Title,
             "
 will be saved there:",
-            lab,
+            values$lab,
             tolower(abbreviate(input$author,3)),
             titleify(input$Title)$folder,
             "/",
