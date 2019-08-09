@@ -62,8 +62,10 @@ if (url != "none"){
 
 ## save all
 headers$Title [1] <- title1
+
 headers$image [1] <- paste0(dirname,"/",filename,".png")
 headers$thumb [1] <- paste0(dirname,"/",filename,"_nail.png")
+
 headers$alt [1] <- "something went wrong"
 headers$description [1] <- caption
 headers$comment [1] <- comment
