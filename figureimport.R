@@ -31,15 +31,17 @@ filename = titleify(title1)$file
 ##------------------------------------ create directory for the smartfigure
 
 directory = paste0(pathfigure,lab,author,titleify(title1)$folder)
-
+dirname= paste0(lab,author,titleify(title1)$folder)
 numb=0
 while( dir.exists (directory) && (!update)){
   numb=numb+1
   
   directory = paste0(pathfigure,lab,author,titleify(title1)$folder,numb)
+  dirname= paste0(lab,author,titleify(title1)$folder,numb)
 }
 
 filename =paste0(filename,formatC(numb, width=2, flag="0"))
+
 
 dir.create (directory)
 
@@ -60,8 +62,8 @@ if (url != "none"){
 
 ## save all
 headers$Title [1] <- title1
-headers$image [1] <- paste0(filename,"/",filename,".png")
-headers$thumb [1] <- paste0(filename,"/",filename,"_nail.png")
+headers$image [1] <- paste0(dirname,"/",filename,".png")
+headers$thumb [1] <- paste0(dirname,"/",filename,"_nail.png")
 headers$alt [1] <- "something went wrong"
 headers$description [1] <- caption
 headers$comment [1] <- comment
@@ -112,7 +114,7 @@ image_write(thumb, path =paththumb, format = "png")
 
 if(exists("tokenRG")){
   x <- drop_search("resultgallery", dtoken = tokenRG)
-  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",filename)
+  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",dirname)
   drop_acc(dtoken = tokenRG)
   drop_create(dropboxfolder)
   drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
@@ -126,6 +128,8 @@ if(exists("tokenRG")){
   
   rmarkdown::render("createfigurereport_pdf2.Rmd", 
                     output_file = filepath)
+  drop_upload(file =filepath,path =paste0(dropboxfolder), dtoken = tokenRG)
+  
   exportimage= magick::image_read_pdf(filepath)
   magick::image_write(image_trim(exportimage[2]), format = "png", path=paste0(directory,"/",filename,"exp.png"))
   
