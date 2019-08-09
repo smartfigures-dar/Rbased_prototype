@@ -186,7 +186,7 @@ server <- function(input, output, session) {
             print(my_test)
             my_test
         })
-        file.lines <- scan("./static/ResultGallery/info.toml", what=character(),  nlines=1, sep='\n')
+        file.lines <- scan("./static/ResultGallery/info.r", what=character(),  nlines=1, sep='\n')
         source(textConnection(file.lines), local = TRUE)
         
     })
@@ -202,7 +202,12 @@ server <- function(input, output, session) {
         my_test
     })
     
-    observeEvent(input$hallcreation, {
+    observeEvent(input$reload, {
+        file.lines <- scan("./static/ResultGallery/info.r", what=character(),  nlines=1, sep='\n')
+        source(textConnection(file.lines), local = TRUE)
+        
+        source(file ="hallcreator.R", local = TRUE)
+        blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
         output$frame <- renderUI({
             
             my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
