@@ -82,7 +82,7 @@ ui <- fluidPage(
                          
                         fileInput("Panel1", "Choose Image",
                                   multiple = FALSE,
-                                  accept = c('image/png', 'image/jpeg')  
+                                  accept = c('image/png', 'image/jpeg', 'application/pdf')  
                         ),  
                         textInput( "author", "Your name"),
                         textInput("Title", "Title of the figure"),
