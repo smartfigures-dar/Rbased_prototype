@@ -19,7 +19,7 @@ if (FALSE){
   highlight = "FALSE"
   author = "jco"
   lab="lkm"
-  thisproject = "project_not_described"
+  thisproject = "no_project"
   updated_by = "julien colomb"
   
 }
@@ -82,7 +82,7 @@ write.table(headers,file = paste0(directory,"/",filename,"_meta.tsv"),
             sep = "\t", , row.names = FALSE)
 
 projects_authors <- read_csv("./static/ResultGallery/projects_authors.csv")
-projects_authors= projects_authors %>% filter (project_title == thisproject) %>% select(- project_title)
+projects_authors <- projects_authors %>% filter (project_title == thisproject) %>% select(- project_title)
 sink (file = paste0(directory,"/",filename,".yml"), append = FALSE)
 
 cat (paste0("# data uplaoded by ",updated_by, " inside the project ", thisproject))
@@ -91,7 +91,7 @@ cat ("authors:
 ")
 
 for (j in c(1:nrow(projects_authors))) {
-  
+  print (j)
   cat(
 '  -
     firstname: "', projects_authors$contributor_firstname[j], '"
@@ -145,12 +145,6 @@ references:
 
 sink()
 
-authors:
-  -
-  firstname: "GivenName1"
-lastname: "FamilyName1"
-affiliation: "Affiliation1"
-id: "AuthorID1 (e.g. ORCID)"
 
 
 ##------------------------------------ create figures
@@ -190,16 +184,13 @@ image_write(thumb, path =paththumb, format = "png")
 
 if(exists("tokenRG")){
   x <- drop_search("resultgallery", dtoken = tokenRG)
-  # #dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",dirname)
+  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",dirname)
   # drop_acc(dtoken = tokenRG)
   # drop_create(dropboxfolder)
   # drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
   # drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG)
   # drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder), dtoken = tokenRG)
   # drop_upload(file =paste0(directory,"/",filename,".yml"),path =paste0(dropboxfolder), dtoken = tokenRG)
-  file = zip::zipr (paste0(directory, ".dar"),files=directory)
-  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/")
-  drop_upload(file =file,path =paste0(dropboxfolder), dtoken = tokenRG)
   
   metadata= headers
   filepath = paste0(directory,"/",filename,"exp.pdf")
@@ -208,11 +199,17 @@ if(exists("tokenRG")){
   
   rmarkdown::render("createfigurereport_pdf2.Rmd", 
                     output_file = filepath)
-  drop_upload(file =filepath,path =paste0(dropboxfolder), dtoken = tokenRG)
+  #drop_upload(file =filepath,path =paste0(dropboxfolder), dtoken = tokenRG)
   
   exportimage= magick::image_read_pdf(filepath)
   magick::image_write(image_trim(exportimage[2]), format = "png", path=paste0(directory,"/",filename,"exp.png"))
   
+  #zip and upload folder
+  file = zip::zipr (paste0(directory, ".dar"),files=directory)
+  dropboxfoldershort = paste0(x$matches[[1]]$metadata$name,"/figures/")
+  drop_upload(file =file,path =paste0(dropboxfoldershort), dtoken = tokenRG)
+  
+  # upload pdf for slack integration
   drop_upload(file =paste0(directory,"/",filename,"exp.png"),path =paste0(x$matches[[1]]$metadata$name,"/slack"), dtoken = tokenRG)
   dropboxmessage = "file saved on dropbox"
   

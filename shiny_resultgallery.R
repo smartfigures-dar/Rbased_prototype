@@ -87,7 +87,7 @@ ui <- fluidPage(
                         ),  
                         textInput( "author", "Your name"),
                         selectInput("project", "part of the project:",
-                                    "unique (values$projects_authors$Project_title)"),
+                                    "unique (values$projects_authors$project_title)"),
                         textInput("Title", "Title of the figure"),
                         selectInput("Status", "Status of the figure:",
                                     c("Published in peer-reviewed journal" = "Published",
@@ -132,7 +132,7 @@ server <- function(input, output, session) {
         values$projects_authors <- read_csv("./static/ResultGallery/projects_authors.csv")
         updateSelectInput(session, "project",
                           
-                          choices = unique (values$projects_authors$Project_title)
+                          choices = unique (values$projects_authors$project_title)
         )
     })
     
@@ -162,7 +162,7 @@ server <- function(input, output, session) {
         author = tolower(abbreviate(input$author,3))
         updated_by = input$author
         if(dropboxuse) tokenRG <- readRDS(input$TOKENDROP$datapath)
-       
+       thisproject = input$project
         
         source("figureimport.R", local = TRUE)
         output$dropboxmessage<- renderText({
@@ -203,7 +203,7 @@ server <- function(input, output, session) {
         
         updateSelectInput(session, "project",
                           
-                          choices = unique (values$projects_authors$Project_title)
+                          choices = unique (values$projects_authors$project_title)
         )
     })
     
