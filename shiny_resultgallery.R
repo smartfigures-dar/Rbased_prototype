@@ -34,6 +34,7 @@ if (deployed) blogdown::install_hugo()
 
 
 
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     
@@ -82,14 +83,17 @@ ui <- fluidPage(
                          
                         fileInput("Panel1", "Choose Image",
                                   multiple = FALSE,
-                                  accept = c('image/png', 'image/jpeg')  
+                                  accept = c('image/png', 'image/jpeg', 'application/pdf')  
                         ),  
                         textInput( "author", "Your name"),
+                        selectInput("project", "part of the project:",
+                                    "unique (values$projects_authors$project_title)"),
                         textInput("Title", "Title of the figure"),
                         selectInput("Status", "Status of the figure:",
-                                    c("Published" = "Published",
+                                    c("Published in peer-reviewed journal" = "Published",
                                       "Experiment is finished" = "preprint",
-                                      "Draft, review request" = "draft")),
+                                      "Early draft, review request" = "draft"),
+                                    selected = "draft"),
                         checkboxInput("update", "Are you updating an existing entry", FALSE),
                         checkboxInput("highlight", "Is this a highlighted figure ?"),
                         textAreaInput("Caption", "Caption of the figure", ""),
@@ -116,13 +120,20 @@ server <- function(input, output, session) {
     if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
     values <- reactiveValues(title = "upload file first", lab = "xxx")
     
+    
     file.lines <- scan("./static/ResultGallery/info.r", what=character(),  nlines=1, sep='\n')
     source(textConnection(file.lines), local = TRUE)
+    
     
     observe({
         imagename = input$Panel1$name
         imagename = titleify (imagename)$file
         updateTextInput(session, "Title", value  = imagename)
+        values$projects_authors <- read_csv("./static/ResultGallery/projects_authors.csv")
+        updateSelectInput(session, "project",
+                          
+                          choices = unique (values$projects_authors$project_title)
+        )
     })
     
     observeEvent(input$button, {
@@ -149,8 +160,9 @@ server <- function(input, output, session) {
         highlight = input$highlight
         lab = values$lab
         author = tolower(abbreviate(input$author,3))
+        updated_by = input$author
         if(dropboxuse) tokenRG <- readRDS(input$TOKENDROP$datapath)
-       
+       thisproject = input$project
         
         source("figureimport.R", local = TRUE)
         output$dropboxmessage<- renderText({
@@ -189,6 +201,10 @@ server <- function(input, output, session) {
         file.lines <- scan("./static/ResultGallery/info.r", what=character(),  nlines=1, sep='\n')
         source(textConnection(file.lines), local = TRUE)
         
+        updateSelectInput(session, "project",
+                          
+                          choices = unique (values$projects_authors$project_title)
+        )
     })
     
     output$frame <- renderUI({
