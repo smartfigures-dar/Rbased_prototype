@@ -96,7 +96,7 @@ ui <- fluidPage(
                                     selected = "draft"),
                         checkboxInput("update", "Are you updating an existing entry", FALSE),
                         checkboxInput("highlight", "Is this a highlighted figure ?"),
-                        textAreaInput("Caption", "Caption of the figure", ""),
+                        textAreaInput("Caption", "Caption of the figure, copy-paste only from utf8 sources", ""),
                         textInput("Comment", "Comment about the figure", ""),
                         textInput("url", "doi or webaddress of the paper/preprint", "none"),
                         actionButton("button", "produce and save SER"),
