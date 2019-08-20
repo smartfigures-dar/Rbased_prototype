@@ -25,6 +25,10 @@ for (j in files$path_display){
   print(j)
   drop_download(j,local_path = paste0("./static",j), dtoken = tokenRG, overwrite = TRUE)
 }
+## unzip
+downloadedzipfiles=list.files(paste0("./static/",folders$name[1]), recursive = TRUE, pattern="*.dar", full.names = TRUE)
+
+sapply(downloadedzipfiles, function (x) unzip(x,exdir = paste0("./static/",folders$name[1],"/figures/")))
 
 unlink ("./static/ResultGallery",recursive = TRUE)
 

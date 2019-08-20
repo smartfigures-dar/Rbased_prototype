@@ -10,6 +10,7 @@ install.packages(c(
   "knitr",
   "rmarkdown",
   "blogdown",
-  "pdftools"
+  "pdftools",
+  "zip"
 ))
 

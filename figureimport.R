@@ -190,13 +190,16 @@ image_write(thumb, path =paththumb, format = "png")
 
 if(exists("tokenRG")){
   x <- drop_search("resultgallery", dtoken = tokenRG)
-  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",dirname)
-  drop_acc(dtoken = tokenRG)
-  drop_create(dropboxfolder)
-  drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
-  drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG)
-  drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder), dtoken = tokenRG)
-  drop_upload(file =paste0(directory,"/",filename,".yml"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  # #dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/",dirname)
+  # drop_acc(dtoken = tokenRG)
+  # drop_create(dropboxfolder)
+  # drop_upload(file =paste0(directory,"/",filename,"_meta.tsv"),path =paste0(dropboxfolder) , dtoken = tokenRG)
+  # drop_upload(file =paste0(directory,"/",filename,"_nail.png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  # drop_upload(file =paste0(directory,"/",filename,".png"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  # drop_upload(file =paste0(directory,"/",filename,".yml"),path =paste0(dropboxfolder), dtoken = tokenRG)
+  file = zip::zipr (paste0(directory, ".dar"),files=directory)
+  dropboxfolder = paste0(x$matches[[1]]$metadata$name,"/figures/")
+  drop_upload(file =file,path =paste0(dropboxfolder), dtoken = tokenRG)
   
   metadata= headers
   filepath = paste0(directory,"/",filename,"exp.pdf")
