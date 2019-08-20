@@ -82,7 +82,7 @@ write.table(headers,file = paste0(directory,"/",filename,"_meta.tsv"),
             sep = "\t", , row.names = FALSE)
 
 projects_authors <- read_csv("./static/ResultGallery/projects_authors.csv")
-projects_authors= projects_authors %>% filter (project == thisproject) %>% select(- Project_title)
+projects_authors= projects_authors %>% filter (project_title == thisproject) %>% select(- project_title)
 sink (file = paste0(directory,"/",filename,".yml"), append = FALSE)
 
 cat (paste0("# data uplaoded by ",updated_by, " inside the project ", thisproject))
