@@ -36,7 +36,7 @@ if (deployed) blogdown::install_hugo()
 
 
 # Define UI for application that draws a histogram
-ui <- fluidPage(
+ui <- fluidPage(theme ="css/default.css",
     
     # Application title
     titlePanel("Result Gallery application"),
