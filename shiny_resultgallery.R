@@ -6,6 +6,23 @@
 #
 #    http://shiny.rstudio.com/
 #install.packages (c("shiny","dplyr","readr","magick","rcrossref","blogdown","rdrop2", "pander"))
+
+hugoframe = HTML('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
+<style>
+  iframe {
+    min-width: 100%;
+  }
+</style>
+<iframe id="myIframe" src="index.html" scrolling="no" frameborder="no"></iframe>
+<script>
+  iFrameResize({
+    heightCalculationMethod: "bodyOffset" 
+  });
+</script>
+')
+
+hugoframe = tags$iframe(src="index.html", width= "80%", height = 1500)
+
 datasave ="on our server, it is safe"
 if (!exists("deployed")){
     deployed =TRUE # deployed on shinyapps.io ?
@@ -38,7 +55,14 @@ if (deployed) blogdown::install_hugo()
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(theme ="css/default.css",
-    
+    htmltools::HTML('<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.min.js"></script>
+             
+             <style>
+             iframe {
+                 min-width: 100%;
+             }
+         </style>
+             '),
     # Application title
     titlePanel("Result Gallery application"),
     fluidRow(column(8, offset = 0,
@@ -77,7 +101,8 @@ ui <- fluidPage(theme ="css/default.css",
                     "See  Gallery",
                     actionButton("reload", "reload gallery"),
                     #actionButton("hallcreation", "Update website with new information"),
-                    fluidRow(htmlOutput("frame"))
+                    
+                    fillRow(uiOutput("frame2", class ="flexfill-item-inner"))
                 )
                 ,
                 
@@ -122,7 +147,7 @@ ui <- fluidPage(theme ="css/default.css",
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
-    if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
+    if (!dropboxuse) {hideTab(inputId = "maintabset", target = "Link with dropbox")}
     values <- reactiveValues(title = "upload file first", lab = "xxx")
     
     
@@ -176,9 +201,9 @@ server <- function(input, output, session) {
         
         source(file ="hallcreator.R", local = TRUE)
         blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.r")
-        output$frame <- renderUI({
+        output$frame2 <- renderUI({
             
-            my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+            my_test <- hugoframe
             print(my_test)
             my_test
         })
@@ -197,9 +222,9 @@ server <- function(input, output, session) {
         
         source(file ="hallcreator.R", local = TRUE)
         blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
-        output$frame <- renderUI({
+        output$frame2 <- renderUI({
             
-            my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+            my_test <- hugoframe
             print(my_test)
             my_test
         })
@@ -212,13 +237,13 @@ server <- function(input, output, session) {
         )
     })
     
-    output$frame <- renderUI({
+    output$frame2 <- renderUI({
         if(dropboxuse){
             tokenRG <- readRDS(input$TOKENDROP$datapath)
             if (!exists("tokenRG")) return (NULL)
         }
         
-        my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+        my_test <- hugoframe
         #print(my_test)
         my_test
     })
@@ -229,13 +254,13 @@ server <- function(input, output, session) {
         
         source(file ="hallcreator.R", local = TRUE)
         blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
-        output$frame <- renderUI({
+        output$frame2 <- renderUI({
             if(dropboxuse){
                 tokenRG <- readRDS(input$TOKENDROP$datapath)
                 if (!exists("tokenRG")) return (NULL)
             }
             
-            my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
+            my_test <- hugoframe
             #print(my_test)
             my_test
         })

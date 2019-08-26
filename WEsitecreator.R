@@ -9,7 +9,7 @@ unlink ("./www",recursive = TRUE)
 dir.create("./www/css/", recursive = TRUE)
 dir.create("./data", recursive = TRUE)
 file.create("./data/item.toml")
-file.copy(from ="static/css/default.css", to ="www/css/default.css")
+file.copy(from ="static/css/default.css", to ="www/css/default.css", overwrite = TRUE)
 rsconnect::deployApp(appFiles = "shiny_resultgallery.R")
 ## now deploy
 
