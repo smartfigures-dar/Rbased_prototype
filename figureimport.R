@@ -32,14 +32,15 @@ filename = titleify(title1)$file
 
 ##------------------------------------ create directory for the smartfigure
 
-directory = paste0(pathfigure,lab,author,titleify(title1)$folder)
-dirname= paste0(lab,author,titleify(title1)$folder)
+directory = paste0(pathfigure,format(Sys.time(), "%Y%m%d"),lab,author,titleify(title1)$folder)
+dirname= paste0(format(Sys.time(), "%Y%m%d"),lab,author,titleify(title1)$folder)
+
 numb=0
 while( dir.exists (directory) && (!update)){
   numb=numb+1
   
-  directory = paste0(pathfigure,lab,author,titleify(title1)$folder,numb)
-  dirname= paste0(lab,author,titleify(title1)$folder,numb)
+  directory = paste0(pathfigure,format(Sys.time(), "%Y%m%d"),lab,author,titleify(title1)$folder,numb)
+  dirname= paste0(format(Sys.time(), "%Y%m%d"),lab,author,titleify(title1)$folder,numb)
 }
 
 filename =paste0(filename,formatC(numb, width=2, flag="0"))

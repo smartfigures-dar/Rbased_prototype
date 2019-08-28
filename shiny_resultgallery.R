@@ -251,6 +251,7 @@ server <- function(input, output, session) {
             input$Title,
             "
 will be saved there:",
+            format(Sys.time(), "%Y%m%d"),
             values$lab,
             tolower(abbreviate(input$author,3)),
             titleify(input$Title)$folder,
