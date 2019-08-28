@@ -122,7 +122,7 @@ ui <- fluidPage(theme ="css/default.css",
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
-    if (!dropboxuse) {hideTab(inputId = "maintabset", target = "dropboxupload")}
+    if (!dropboxuse) {hideTab(inputId = "maintabset", target = "Link with dropbox")}
     values <- reactiveValues(title = "upload file first", lab = "xxx")
     
     
