@@ -4,7 +4,13 @@ shiny::runApp("shiny_resultgallery.R")
 
 ## deploy the app
 unlink ("./static/ResultGallery/figures",recursive = TRUE)
+unlink ("./data",recursive = TRUE)
 unlink ("./www",recursive = TRUE)
+dir.create("./www/css/", recursive = TRUE)
+dir.create("./data", recursive = TRUE)
+file.create("./data/item.toml")
+file.copy(from ="static/css/default.css", to ="www/css/default.css")
+rsconnect::deployApp(appFiles = "shiny_resultgallery.R")
 ## now deploy
 
 

@@ -6,10 +6,11 @@
 #
 #    http://shiny.rstudio.com/
 #install.packages (c("shiny","dplyr","readr","magick","rcrossref","blogdown","rdrop2", "pander"))
-
+datasave ="on our server, it is safe"
 if (!exists("deployed")){
     deployed =TRUE # deployed on shinyapps.io ?
     dropboxuse = deployed # should the dropbox integration be used
+    datasave ="on dropbox, i.e. not safe"
 }
 
 library(shiny)
@@ -40,37 +41,41 @@ ui <- fluidPage(theme ="css/default.css",
     
     # Application title
     titlePanel("Result Gallery application"),
+    fluidRow(column(8, offset = 0,
+                    "Please do not share the information you would access here, not even talk about it without the consent of the authors."
+    ),
     fluidRow(
-        column (6,
-                "V.0.1 beta, data stored on dropbox, i.e. not secure."
+        
+        column (5,offset = 1,
+                tags$a(href="https://github.com/smartfigures-dar/SmartFig_Rbased_prototype/issues", "Documentation and Bug reports")
         ),
-        column (6,
-        "please do not share the information you would access here, not even talk about it without the consent of the authors."
+        column (5,
+                paste0(" V.0.1 beta, data stored ", datasave)
+        )
+        
+        
         )
     ),
     
-    fluidRow(column(10, offset = 1,
-                    "Documentation and Bug reports via the",
-             tags$a(href="https://github.com/smartfigures-dar/SmartFig_Rbased_prototype/issues", "open source project hosted on github")
-                )
-    ),
+    
     # Sidebar with a slider input for number of bins
     
     
     # Show a plot of the generated distribution
     tabsetPanel(id="maintabset",
                 
-                tabPanel("dropboxupload",
+                tabPanel("Link with dropbox",
                          "Upload your dropbox token to read and save SmartFigures",
                          
                          fileInput("TOKENDROP", "upload your dropbox authentificator", accept = ".rds"),
                          actionButton("hallcreation", "Update website with new information"),
-                         actionButton("reload", "reload gallery"),
+                         
                          "rest not implemented"
                 )
                 ,
                 tabPanel(
                     "See  Gallery",
+                    actionButton("reload", "reload gallery"),
                     #actionButton("hallcreation", "Update website with new information"),
                     fluidRow(htmlOutput("frame"))
                 )
@@ -214,7 +219,7 @@ server <- function(input, output, session) {
         }
         
         my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
-        print(my_test)
+        #print(my_test)
         my_test
     })
     
@@ -225,9 +230,13 @@ server <- function(input, output, session) {
         source(file ="hallcreator.R", local = TRUE)
         blogdown::hugo_cmd("--config ./config.toml,./static/ResultGallery/info.toml")
         output$frame <- renderUI({
+            if(dropboxuse){
+                tokenRG <- readRDS(input$TOKENDROP$datapath)
+                if (!exists("tokenRG")) return (NULL)
+            }
             
             my_test <- tags$iframe(src="index.html", width = "100%", height= "2000")
-            print(my_test)
+            #print(my_test)
             my_test
         })
     })
