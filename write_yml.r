@@ -30,7 +30,7 @@ title: "',title1,'"' , sep = "")
 cat ('
 
 description: |
-  ',caption, sep = "")
+  ',gsub ("\n", "\n  ", caption), sep = "")
 
 cat ('
 
